@@ -23,9 +23,9 @@ do
 			[ "$action" == "backlight" ] && xset dpms force on
 		fi
 	else
+		[ "$action" == "backlight" ] && xset dpms force off
 		if [ $LIDSTATE = "OPENED" ]; then
 			LIDSTATE="CLOSED"
-			[ "$action" == "backlight" ] && xset dpms force off
 
 			[ "$action" == "suspend" ] && dbus-send \
 				--system \
