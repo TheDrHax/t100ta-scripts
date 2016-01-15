@@ -1,9 +1,9 @@
 # t100ta-scripts
-My scripts to make T100TAM more usable with Linux
+Scripts to make T100TAM more usable with Linux
 
 ## React to lid open/close
 
-Theese two scripts are based on base-station.sh script from <a href="https://github.com/jfwells/linux-asus-t100ta">jfwells/linux-asus-t100ta</a>.
+These two scripts are based on base-station.sh script from <a href="https://github.com/jfwells/linux-asus-t100ta">jfwells/linux-asus-t100ta</a>.
 
 ### lid_root.sh
 
