@@ -1,5 +1,14 @@
 #!/bin/sh
 
+# Config #
+
+# action: "backlight" or "suspend"
+#  backlight: turn screen on and off
+#  suspend: activate suspend on lid close
+action="backlight"
+
+#--------#
+
 if cat /proc/acpi/button/lid/LID/state | grep -q "open"; then
 	LIDSTATE="OPENED"
 else
@@ -11,12 +20,19 @@ do
 	if cat /proc/acpi/button/lid/LID/state | grep -q "open"; then
 		if [ $LIDSTATE = "CLOSED" ]; then
 			LIDSTATE="OPENED"
-			xset dpms force on
+			[ "$action" == "backlight" ] && xset dpms force on
 		fi
 	else
 		if [ $LIDSTATE = "OPENED" ]; then
 			LIDSTATE="CLOSED"
-			xset dpms force off
+			[ "$action" == "backlight" ] && xset dpms force off
+
+			[ "$action" == "suspend" ] && dbus-send \
+				--system \
+				--dest=org.freedesktop.login1 \
+				/org/freedesktop/login1 \
+				org.freedesktop.login1.Manager.Suspend \
+				boolean:true
 		fi
 	fi
 

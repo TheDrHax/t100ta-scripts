@@ -18,7 +18,7 @@ bash /path/to/script/lid_root.sh &
 
 ### lid_user.sh
 
-This script turns off the screen then lid is closed and turns it on after lid is opened.
+This script turns off the screen then lid is closed and turns it on after lid is opened. Also it can activate suspend if action is set to suspend.
 
 Script needs to be started **in user's session** to get access to the display.
 
