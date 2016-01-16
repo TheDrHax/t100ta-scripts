@@ -2,39 +2,67 @@
 
 # Config #
 
-# action: "backlight" or "suspend"
-#  backlight: turn screen on and off
+# screen_control: "true" or "false"
+#  control the screen backlight
+screen_control="true"
+
+# action: "none" or "suspend" or "hibernate"
 #  suspend: activate suspend on lid close
-action="backlight"
+#  hibernate: activate hibernation on lid close (may not work)
+action="none"
 
 #--------#
 
-if cat /proc/acpi/button/lid/LID/state | grep -q "open"; then
+function lid_state {
+	cat /proc/acpi/button/lid/LID/state | grep -Eo '[a-z]*$'
+}
+
+function dbus-action {
+	case "$1" in
+		suspend)
+			dbus-send --print-reply --system --dest=org.freedesktop.login1 /org/freedesktop/login1 org.freedesktop.login1.Manager.Suspend boolean:true
+			;;
+
+		hibernate)
+			dbus-send --print-reply --system --dest=org.freedesktop.login1 /org/freedesktop/login1 org.freedesktop.login1.Manager.Hibernate boolean:true
+			;;
+	esac
+}
+
+# Getting initial lid state
+if [ `lid_state` == "open" ]; then
 	LIDSTATE="OPENED"
 else
 	LIDSTATE="CLOSED"
 fi
 
-while true
-do
-	if cat /proc/acpi/button/lid/LID/state | grep -q "open"; then
+while true; do
+
+	if [ `lid_state` == "open" ]; then
+
 		if [ $LIDSTATE = "CLOSED" ]; then
 			LIDSTATE="OPENED"
-			[ "$action" == "backlight" ] && xset dpms force on
+
+			if [ "$screen_control" == "true" ]; then
+				xset dpms force on
+			fi
 		fi
+
 	else
-		[ "$action" == "backlight" ] && xset dpms force off
+
 		if [ $LIDSTATE = "OPENED" ]; then
 			LIDSTATE="CLOSED"
 
-			[ "$action" == "suspend" ] && dbus-send \
-				--system \
-				--dest=org.freedesktop.login1 \
-				/org/freedesktop/login1 \
-				org.freedesktop.login1.Manager.Suspend \
-				boolean:true
+			dbus-action $action
 		fi
+
+		# Update screen state each time
+		if [ "$screen_control" == "true" ]; then
+			xset dpms force off
+		fi
+
 	fi
 
     sleep 1
+
 done
