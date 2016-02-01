@@ -1,6 +1,18 @@
 # t100ta-scripts
 Scripts to make T100TAM more usable with Linux
 
+## Fix GRUB freeze while booting without dock
+
+This script will:
+* install packages required for building GRUB from sources (optional)
+* download latest GRUB sources from git://git.savannah.gnu.org/grub.git
+* compile GRUB from these sources
+* install it to /boot/efi/efi/grub (adds **grub** entry to EFI menu)
+
+If you can boot your tablet without dock, you probably don't need this script.
+
+This method was tested many times on T100TAM and it works for me on Debian and Ubuntu.
+
 ## React to lid open/close
 
 These two scripts are based on base-station.sh script from <a href="https://github.com/jfwells/linux-asus-t100ta">jfwells/linux-asus-t100ta</a>.
