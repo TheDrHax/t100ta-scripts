@@ -1,0 +1,27 @@
+#!/bin/bash
+
+function suspend {
+	modprobe -r brcmfmac
+	modprobe -r battery
+	modprobe -r hid_multitouch
+}
+
+function wake {
+	modprobe brcmfmac
+	modprobe battery
+	modprobe hid_multitouch
+	service network-manager restart
+	service wpa_supplicant restart
+}
+
+case "$1" in
+
+	hibernate) suspend ;;
+	suspend) suspend ;;
+	thaw) wake ;;
+	resume) wake ;;
+
+	pre) ([ $2 -eq "suspend" ] || [ $2 -eq "hibernate" ]) && suspend ;;
+	post) ([ $2 -eq "suspend" ] || [ $2 -eq "hibernate" ]) && wake ;;
+
+esac
