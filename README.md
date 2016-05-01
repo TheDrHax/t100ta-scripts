@@ -21,6 +21,8 @@ These two scripts are based on base-station.sh script from <a href="https://gith
 
 This script reloads hid_multitouch module after lid is opened to re-enable the touchscreen. Not sure if this bug affects someone except me, so install it only if your touchscreen is not working after lid is closed.
 
+Also this script can change CPU governors when lid state is changed. You can specify governors for closed and opened states and disable this behaviour by changing the variables on top of the script.
+
 Script needs to be started with **root**.
 
 To install, place this command to */etc/rc.local* before *exit 0* command
