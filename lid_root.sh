@@ -3,16 +3,16 @@
 # modprobe hid_multitouch: resets touchscreen when lid is toggled
 # change_cpu_governor: changes governor to powersave when lid is closed
 governor_control="true"
-governor_opened="ondemand"
-governor_closed="powersave"
 
 #--------#
 
 function change_cpu_governor {
-    governor=$([ "$1" == "OPENED" ] \
-                   && echo "$governor_opened" \
-                   || echo "$governor_closed" \
-              )
+    if [ "$1" == "OPENED" ]; then
+        governor=$old_governor
+    else
+        old_governor=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
+        governor="powersave"
+    fi
               
     echo "Changing CPU governor to $governor"
 

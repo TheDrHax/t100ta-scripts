@@ -21,7 +21,7 @@ These two scripts are based on base-station.sh script from <a href="https://gith
 
 This script reloads hid_multitouch module after lid is opened to re-enable the touchscreen. Not sure if this bug affects someone except me, so install it only if your touchscreen is not working after lid is closed.
 
-Also this script can change CPU governors when lid state is changed. You can specify governors for closed and opened states and disable this behaviour by changing the variables on top of the script.
+Also this script can change CPU governor to powersave and back when lid state is changed. You can disable this behaviour by changing the **governor_control** variable on top of the script.
 
 Script needs to be started with **root**.
 
