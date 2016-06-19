@@ -4,14 +4,16 @@ function suspend {
 	modprobe -r brcmfmac
 	modprobe -r battery
 	modprobe -r hid_multitouch
+	service network-manager stop
+	service wpa_supplicant stop
 }
 
 function wake {
 	modprobe brcmfmac
 	modprobe battery
 	modprobe hid_multitouch
-	service network-manager restart
-	service wpa_supplicant restart
+	service network-manager start
+	service wpa_supplicant start
 }
 
 case "$1" in
