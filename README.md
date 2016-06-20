@@ -58,4 +58,4 @@ Daemons being restarted on wake:
 * network-manager
 * wpa_supplicant
 
-To install, place this script in **/etc/pm/sleep.d/** and make it executable with **chmod +x /etc/pm/sleep.d/t100ta-suspend**.
+To install, place this script in **/lib/systemd/system-sleep/** and make it executable with **chmod +x /lib/systemd/system-sleep/t100ta-suspend**.
