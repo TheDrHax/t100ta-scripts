@@ -1,19 +1,19 @@
 #!/bin/bash
 
 function suspend {
-	modprobe -r brcmfmac
-	modprobe -r battery
-	modprobe -r hid_multitouch
 	service network-manager stop
 	service wpa_supplicant stop
+	modprobe -r brcmfmac
+	modprobe -r hid_multitouch
+	modprobe -r battery
 }
 
 function wake {
-	modprobe brcmfmac
 	modprobe battery
 	modprobe hid_multitouch
-	service network-manager start
+	modprobe brcmfmac
 	service wpa_supplicant start
+	service network-manager start
 }
 
 case "$1" in
