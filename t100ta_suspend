@@ -1,8 +1,6 @@
 #!/bin/bash
 
 function suspend {
-	service network-manager stop
-	service wpa_supplicant stop
 	modprobe -r brcmfmac
 	modprobe -r hid_multitouch
 	modprobe -r battery
@@ -12,8 +10,8 @@ function wake {
 	modprobe battery
 	modprobe hid_multitouch
 	modprobe brcmfmac
-	service wpa_supplicant start
-	service network-manager start
+	service network-manager restart
+	service wpa_supplicant restart
 }
 
 case "$1" in
