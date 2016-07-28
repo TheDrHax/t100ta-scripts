@@ -45,27 +45,21 @@ bash /path/to/script/lid_user.sh
 
 In GNOME 3 I have added this script to the app menu with **alacarte** and then added it to startup list in **gnome-tweak-tool**.
 
-## t100ta_suspend
+## t100ta_suspend (systemd only)
 
-This script will load/unload kernel modules and restart specific daemons before and after suspend or hibernation. This will prevent problems with networking and touchscreen after suspend.
+This script will load/unload kernel modules and restart specific daemons before and after suspend. This will prevent problems with networking, touchscreen and dock before and after suspend.
 
 Kernel modules being loaded/unloaded:
 * brcmfmac (wi-fi)
 * battery
 * hid_multitouch
+* usbhid
 
 Daemons being restarted on wake:
 * network-manager
 * wpa_supplicant
 
-How to install:
-
-* For Ubuntu ≤ 14:
-
-    * Place this script in **/etc/pm/sleep.d/**
-    * Make it executable **chmod +x /etc/pm/sleep.d/t100ta-suspend**
-
-* For Ubuntu ≥ 15:
-
-    * Place this script in **/lib/systemd/system-sleep/**
-    * Make it executable **chmod +x /lib/systemd/system-sleep/t100ta-suspend**
+How to install (as root):
+* cp suspend/t100ta_{suspend,resume}.service /etc/systemd/system/
+* systemctl enable t100ta_suspend.service
+* systemctl enable t100ta_wake.service

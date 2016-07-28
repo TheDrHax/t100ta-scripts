@@ -1,0 +1,13 @@
+[Unit]
+Description=T100TA Suspend Script
+Before=sleep.target
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/modprobe -r usbhid
+ExecStart=/sbin/modprobe -r brcmfmac
+ExecStart=/sbin/modprobe -r hid_multitouch
+ExecStart=/sbin/modprobe -r battery
+
+[Install]
+WantedBy=sleep.target

@@ -1,0 +1,15 @@
+[Unit]
+Description=T100TA Wake Script
+After=suspend.target
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/modprobe battery
+ExecStart=/sbin/modprobe hid_multitouch
+ExecStart=/sbin/modprobe brcmfmac
+ExecStart=/sbin/modprobe usbhid
+ExecStart=/bin/systemctl restart network-manager.service
+ExecStart=/bin/systemctl restart wpa_supplicant.service
+
+[Install]
+WantedBy=suspend.target
