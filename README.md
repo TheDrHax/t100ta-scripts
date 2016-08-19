@@ -13,37 +13,19 @@ If you can boot your tablet without dock, you probably don't need this script.
 
 This method was tested many times on T100TAM and it works for me on Debian and Ubuntu.
 
-## React to lid open/close
+## t100ta_lid
 
-These two scripts are based on base-station.sh script from <a href="https://github.com/jfwells/linux-asus-t100ta">jfwells/linux-asus-t100ta</a>.
+This script will monitor the lid state to workaround two problems:
+* Touchscreen doesn't work after closing the lid (need to reload the **hid_multitouch** module)
+* Backlight is not forced to be disabled when lid is closed
 
-### lid_root.sh
+How to install (as root, for systemd):
+* cp lid/t100ta_lid.service /etc/systemd/system/
+* cp lid/t100ta_lid.sh /usr/local/bin/
+* systemctl enable t100ta_lid.service
+* systemctl start t100ta_lid.service
 
-This script reloads hid_multitouch module after lid is opened to re-enable the touchscreen. Not sure if this bug affects someone except me, so install it only if your touchscreen is not working after lid is closed.
-
-Another functions of this script (each can be disabled):
-* change CPU governor to powersave and back
-* toggle Wi-Fi state if lid is closed for a long time
-
-Script needs to be started with **root**.
-
-To install, place this command to */etc/rc.local* before *exit 0* command
-```
-bash /path/to/script/lid_root.sh &
-```
-
-### lid_user.sh
-
-This script turns off the screen then lid is closed and turns it on after lid is opened. Also it can activate suspend if action is set to suspend.
-
-Script needs to be started **in user's session** to get access to the display.
-
-To install, place this command into user startup settings
-```
-bash /path/to/script/lid_user.sh
-```
-
-In GNOME 3 I have added this script to the app menu with **alacarte** and then added it to startup list in **gnome-tweak-tool**.
+If you don't have systemd, you can just start t100ta_lid.sh as root.
 
 ## t100ta_suspend (systemd only)
 
