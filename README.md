@@ -63,3 +63,12 @@ How to install (as root):
 * cp suspend/t100ta_{suspend,resume}.service /etc/systemd/system/
 * systemctl enable t100ta_suspend.service
 * systemctl enable t100ta_wake.service
+
+## bluetooth (systemd only)
+
+This systemd service will execute `btattach` to enable bluetooth on each boot.
+It is an alternative for previous dirty workaround with /etc/rc.local.
+
+How to install (as root):
+* cp bluetooth/t100ta_btattach.service /etc/systemd/system/
+* systemctl enable t100ta_btattach.service

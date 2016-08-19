@@ -1,0 +1,10 @@
+[Unit]
+Description=BlueTooth workaround for T100TA
+Before=bluetooth.service
+
+[Service]
+ExecStart=/usr/bin/btattach --bredr /dev/ttyS4 -P bcm
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
