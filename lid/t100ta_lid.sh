@@ -1,18 +1,22 @@
 #!/bin/bash
 
-# Prepare environment
-export DISPLAY=$(w | sed -n 's/.* \(:[0-9]\) .*/\1/p')
-USER=$(who | grep :0 | awk '{print $1}')
-export XAUTHORITY="/home/$USER/.Xauthority"
-
 # Functions
+alias get_display="w | sed -n 's/.* \(:[0-9]\) .*/\1/p'"
+
 function is_opened {
     return $(grep -q "open" /proc/acpi/button/lid/LID/state)
 }
 
+# Prepare environment
+while [ ! "$DISPLAY" ] && sleep 1; do # Wait for X session
+    export DISPLAY=$(w | sed -n 's/.* \(:[0-9]\) .*/\1/p')
+done
+USER=$(who | grep :0 | awk '{print $1}')
+export XAUTHORITY="/home/$USER/.Xauthority"
+
 # -------- #
 
-while true; do
+while sleep 1; do
 	if is_opened; then
 		if [ ! $LIDSTATE ] || [ $LIDSTATE == "CLOSED" ]; then
 			LIDSTATE="OPENED"; echo $LIDSTATE
@@ -27,6 +31,4 @@ while true; do
 
 		xset dpms force off # don't allow backlight to be enabled when lid is closed
 	fi
-
-    sleep 1
 done
