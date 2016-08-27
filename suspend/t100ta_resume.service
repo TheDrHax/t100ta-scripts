@@ -4,10 +4,14 @@ After=suspend.target
 
 [Service]
 Type=oneshot
-ExecStart=/sbin/modprobe battery
+
+# Touchscreen not working after suspend
 ExecStart=/sbin/modprobe hid_multitouch
-ExecStart=/sbin/modprobe brcmfmac
+
+# System is freezing during suspend with new touchpad driver
 ExecStart=/sbin/modprobe usbhid
+
+# Network workaround
 ExecStart=/bin/systemctl restart network-manager.service
 ExecStart=/bin/systemctl restart wpa_supplicant.service
 

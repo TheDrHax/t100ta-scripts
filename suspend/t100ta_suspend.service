@@ -4,10 +4,12 @@ Before=sleep.target
 
 [Service]
 Type=oneshot
+
+# System is freezing during suspend with new touchpad driver
 ExecStart=/sbin/modprobe -r usbhid
-ExecStart=/sbin/modprobe -r brcmfmac
+
+# Touchscreen not working after suspend
 ExecStart=/sbin/modprobe -r hid_multitouch
-ExecStart=/sbin/modprobe -r battery
 
 [Install]
 WantedBy=sleep.target

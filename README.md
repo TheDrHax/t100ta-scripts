@@ -32,8 +32,6 @@ If you don't have systemd, you can just start t100ta_lid.sh as root.
 This script will load/unload kernel modules and restart specific daemons before and after suspend. This will prevent problems with networking, touchscreen and dock before and after suspend.
 
 Kernel modules being loaded/unloaded:
-* brcmfmac (wi-fi)
-* battery
 * hid_multitouch
 * usbhid
 
