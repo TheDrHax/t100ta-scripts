@@ -13,17 +13,11 @@ If you can boot your tablet without dock, you probably don't need this script.
 
 This method was tested many times on T100TAM and it works for me on Debian and Ubuntu.
 
-## t100ta_lid
+## t100ta_lid (systemd recommended)
 
 This script will monitor the lid state to workaround two problems:
 * Touchscreen doesn't work after closing the lid (need to reload the **hid_multitouch** module)
 * Backlight is not forced to be disabled when lid is closed
-
-How to install (as root, for systemd):
-* cp lid/t100ta_lid.service /etc/systemd/system/
-* cp lid/t100ta_lid.sh /usr/local/bin/
-* systemctl enable t100ta_lid.service
-* systemctl start t100ta_lid.service
 
 If you don't have systemd, you can just start t100ta_lid.sh as root.
 
@@ -39,16 +33,7 @@ Daemons being restarted on wake:
 * network-manager
 * wpa_supplicant
 
-How to install (as root):
-* cp suspend/t100ta_{suspend,resume}.service /etc/systemd/system/
-* systemctl enable t100ta_suspend.service
-* systemctl enable t100ta_wake.service
-
 ## bluetooth (systemd only)
 
 This systemd service will execute `btattach` to enable bluetooth on each boot.
 It is an alternative for previous dirty workaround with /etc/rc.local.
-
-How to install (as root):
-* cp bluetooth/t100ta_btattach.service /etc/systemd/system/
-* systemctl enable t100ta_btattach.service
