@@ -1,0 +1,9 @@
+[Unit]
+Description=T100TA CState Workaround
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/c6off+c7on.sh
+
+[Install]
+WantedBy=multi-user.target
