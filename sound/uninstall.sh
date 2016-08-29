@@ -12,4 +12,7 @@ if [ -d "/usr/share/alsa/ucm/bytcr-rt5640" ]; then
     echo "Uninstalling /var/lib/alsa/asound.state"
     rm /var/lib/alsa/asound.state
     alsactl restore
+
+    echo "Configuring Pulseaudio"
+    sed -i 's/^#\(load-module module-suspend-on-idle\)/\1/' /etc/pulse/default.pa
 fi
