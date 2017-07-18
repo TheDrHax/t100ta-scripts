@@ -1,9 +1,0 @@
-[Unit]
-Description=Lid state monitoring
-
-[Service]
-ExecStart=/usr/local/bin/t100ta_lid.sh
-Restart=always
-
-[Install]
-WantedBy=multi-user.target

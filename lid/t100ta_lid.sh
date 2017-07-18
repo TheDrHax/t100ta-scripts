@@ -1,34 +1,17 @@
-#!/bin/bash
-
-# Functions
-alias get_display="w | sed -n 's/.* \(:[0-9]\) .*/\1/p'"
-
-function is_opened {
-    return $(grep -q "open" /proc/acpi/button/lid/LID/state)
-}
-
-# Prepare environment
-while [ ! "$DISPLAY" ] && sleep 1; do # Wait for X session
-    export DISPLAY=$(w | sed -n 's/.* \(:[0-9]\) .*/\1/p')
-done
-USER=$(who | grep :0 | awk '{print $1}')
-export XAUTHORITY="/home/$USER/.Xauthority"
-
-# -------- #
+#!/system/bin/sh
 
 while sleep 1; do
-	if is_opened; then
+	if grep -q "open" /proc/acpi/button/lid/LID/state; then
 		if [ ! $LIDSTATE ] || [ $LIDSTATE == "CLOSED" ]; then
 			LIDSTATE="OPENED"; echo $LIDSTATE
 			modprobe hid_multitouch
-			xset dpms force on
+			am broadcast -a android.intent.action.LID_EVENT --ei android.intent.extra.LID_STATE 0
 		fi
 	else
 		if [ ! $LIDSTATE ] || [ $LIDSTATE == "OPENED" ]; then
 			LIDSTATE="CLOSED"; echo $LIDSTATE
-			modprobe -r hid_multitouch
+			rmmod hid_multitouch
+			am broadcast -a android.intent.action.LID_EVENT --ei android.intent.extra.LID_STATE 1
 		fi
-
-		xset dpms force off # don't allow backlight to be enabled when lid is closed
 	fi
 done
