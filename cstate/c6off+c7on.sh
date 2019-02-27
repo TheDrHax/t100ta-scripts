@@ -32,8 +32,8 @@ for cpu in cpu[0-9]*; do
 		cd "$dir"
 		read name <name
 		case $name in
-			C6*-BYT) disable 1;;
-			C7*-BYT) disable 0;;
+			C6*) disable 1;;
+			C7*) disable 0;;
 		esac
 		cd ../../..
 	done
